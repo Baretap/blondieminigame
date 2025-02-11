@@ -10,9 +10,9 @@
     <h1>Blondie Mini Game</h1>
     <div id="game-area" class="blurred">
         <div id="info-bar">
-            <p id="level">Taso: 1</p>
-            <p id="score">Pisteet: 0</p>
-            <p id="time">Aika: 30</p>
+            <p id="level">Level: 1</p>
+            <p id="score">Score: 0</p>
+            <p id="time">Time: 30</p>
         </div>
         <img src="blondie.png" alt="Blondie" id="blondie" class="unclickable" />
         <div id="start-button-container">
@@ -43,7 +43,7 @@
         function scorePoint() {
             if (!document.getElementById('blondie').classList.contains('unclickable')) {
                 score++;
-                document.getElementById('score').innerText = 'Pisteet: ' + score;
+                document.getElementById('score').innerText = 'Score: ' + score;
                 checkLevelUp();
                 moveBlondieRandomly();
             }
@@ -52,11 +52,11 @@
         function checkLevelUp() {
             if (score >= pointsToNextLevel * level) {
                 level++;
-                document.getElementById('level').innerText = 'Taso: ' + level;
+                document.getElementById('level').innerText = 'Level: ' + level;
                 if (level === 5) {
                     score += 100;
-                    document.getElementById('score').innerText = 'Pisteet: ' + score;
-                    alert('Onneksi olkoon! Saavutettuasi tason 5, sait 100 pistettä ekstraa!');
+                    document.getElementById('score').innerText = 'Score: ' + score;
+                    alert('Congratulations! You reached level 5 and earned 100 bonus points!');
                 }
                 increaseDifficulty();
             }
@@ -65,24 +65,24 @@
         function increaseDifficulty() {
             if (time > 5) {
                 time -= 5;
-                document.getElementById('time').innerText = 'Aika: ' + time;
+                document.getElementById('time').innerText = 'Time: ' + time;
             }
 
             let blondie = document.getElementById('blondie');
             let newSize = Math.max(50, blondie.width - 10);
-            blondie.width = newSize;
-            blondie.height = newSize;
+            blondie.style.width = newSize + 'px';
+            blondie.style.height = newSize + 'px';
         }
 
         function moveBlondieRandomly() {
             let gameArea = document.getElementById('game-area');
             let infoBar = document.getElementById('info-bar');
             let blondie = document.getElementById('blondie');
-            let maxWidth = gameArea.clientWidth - blondie.width;
-            let maxHeight = gameArea.clientHeight - blondie.height - infoBar.offsetHeight;
+            let maxWidth = gameArea.clientWidth - blondie.clientWidth;
+            let maxHeight = gameArea.clientHeight - blondie.clientHeight - infoBar.clientHeight;
 
             let randomX = Math.floor(Math.random() * maxWidth);
-            let randomY = Math.floor(Math.random() * maxHeight) + infoBar.offsetHeight;
+            let randomY = Math.floor(Math.random() * maxHeight) + infoBar.clientHeight;
 
             blondie.style.left = randomX + 'px';
             blondie.style.top = randomY + 'px';
@@ -90,10 +90,10 @@
 
         function countdown() {
             time--;
-            document.getElementById('time').innerText = 'Aika: ' + time;
+            document.getElementById('time').innerText = 'Time: ' + time;
             if (time <= 0) {
                 clearInterval(timer);
-                alert('Aika loppui! Lopullinen pistemääräsi on ' + score + '. Saavutit tason ' + level + '!');
+                alert('Time is up! Your final score is ' + score + '. You reached level ' + level + '!');
                 updateTotalScore();
                 resetGame();
             }
@@ -109,12 +109,12 @@
             score = 0;
             time = 30;
             level = 1;
-            document.getElementById('score').innerText = 'Pisteet: ' + score;
-            document.getElementById('time').innerText = 'Aika: ' + time;
-            document.getElementById('level').innerText = 'Taso: ' + level;
+            document.getElementById('score').innerText = 'Score: ' + score;
+            document.getElementById('time').innerText = 'Time: ' + time;
+            document.getElementById('level').innerText = 'Level: ' + level;
             let blondie = document.getElementById('blondie');
-            blondie.width = 100;
-            blondie.height = 100;
+            blondie.style.width = '100px';
+            blondie.style.height = '100px';
             blondie.classList.add('unclickable');
             document.getElementById('start-button-container').style.display = 'block';
             document.getElementById('game-area').classList.add('blurred');

@@ -4,7 +4,7 @@ import logging
 import asyncio
 
 # Enable logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levellevelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Define the command handler
@@ -13,9 +13,9 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         [InlineKeyboardButton("Play", url="https://baretap.github.io/blondieminigame/")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    
+
     await update.message.reply_text(
-        'Tervetuloa Blondie Mini Gameen! Paina alla olevaa nappia aloittaaksesi pelin:',
+        'Welcome to the Blondie Mini Game! Click the button below to play the game:',
         reply_markup=reply_markup
     )
     await asyncio.sleep(1)
