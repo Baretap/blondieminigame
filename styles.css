@@ -1,3 +1,5 @@
+/* Aiemmat tyylit säilytetään */
+
 body {
     background-color: #f0f8ff;
     font-family: 'Arial', sans-serif;
@@ -38,7 +40,6 @@ h1 {
 
 .blurred {
     filter: blur(5px);
-    pointer-events: none;
 }
 
 .unclickable {
@@ -64,10 +65,10 @@ h1 {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 1; /* Näkyy kirkkaana sumean pelialueen päällä */
+    z-index: 2; /* Näkyy kirkkaana sumean pelialueen päällä */
 }
 
-#game-button, #start-button {
+#start-button {
     background-color: #ff1493;
     color: #fff;
     border: none;
@@ -75,10 +76,9 @@ h1 {
     font-size: 1.5em;
     cursor: pointer;
     border-radius: 5px;
-    margin-top: 20px;
 }
 
-#game-button:hover, #start-button:hover {
+#start-button:hover {
     background-color: #ff69b4;
 }
 

@@ -14,12 +14,14 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
-    await update.message.reply_text('Welcome to the Blondie Mini Game! Click the button below to play the game:', reply_markup=reply_markup)
-    await asyncio.sleep(1)  # Add a delay of 1 second between messages
+    await update.message.reply_text(
+        'Tervetuloa Blondie Mini Gameen! Paina alla olevaa nappia aloittaaksesi pelin:',
+        reply_markup=reply_markup
+    )
+    await asyncio.sleep(1)
 
 def main():
-    # Replace 'YOUR_TOKEN' with your actual bot token
-    application = Application.builder().token("7348594119:AAFkfxTpTbby1BP7GEUvuXgt5Ss9roKyeJk").build()
+    application = Application.builder().token("YOUR_TELEGRAM_BOT_TOKEN").build()
 
     application.add_handler(CommandHandler("start", start))
 

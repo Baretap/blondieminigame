@@ -14,8 +14,8 @@
             <p id="score">Pisteet: 0</p>
             <p id="time">Aika: 30</p>
         </div>
-        <img src="blondie.png" alt="Blondie" id="blondie" onclick="scorePoint()" class="unclickable"/>
-        <div id="start-button-container" class="overlay">
+        <img src="blondie.png" alt="Blondie" id="blondie" class="unclickable" />
+        <div id="start-button-container">
             <button id="start-button" onclick="startGame()">Start</button>
         </div>
     </div>
@@ -79,10 +79,10 @@
             let infoBar = document.getElementById('info-bar');
             let blondie = document.getElementById('blondie');
             let maxWidth = gameArea.clientWidth - blondie.width;
-            let maxHeight = gameArea.clientHeight - blondie.height - infoBar.clientHeight;
+            let maxHeight = gameArea.clientHeight - blondie.height - infoBar.offsetHeight;
 
             let randomX = Math.floor(Math.random() * maxWidth);
-            let randomY = Math.floor(Math.random() * maxHeight) + infoBar.clientHeight;
+            let randomY = Math.floor(Math.random() * maxHeight) + infoBar.offsetHeight;
 
             blondie.style.left = randomX + 'px';
             blondie.style.top = randomY + 'px';
@@ -123,6 +123,8 @@
         function showWallet() {
             window.location.href = 'wallet.html';
         }
+
+        document.getElementById('blondie').addEventListener('click', scorePoint);
     </script>
 </body>
 </html>
