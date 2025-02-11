@@ -1,21 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blondie Mini Game</title>
+    <style>
+        body { text-align: center; }
+        img { cursor: pointer; }
+        #blondie {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+    </style>
 </head>
 <body>
     <h1>Blondie Mini Game</h1>
-    <img src="blondie.png" alt="Blondie" onclick="scorePoint()" />
-    <p id="score">Score: 0</p>
+    <p id="level">Taso: 1</p>
+    <img src="blondie.png" alt="Blondie" id="blondie" onclick="scorePoint()" />
+    <p id="score">Pisteet: 0</p>
+    <p id="time">Aika: 30</p>
 
     <script>
         let score = 0;
+        let time = 30;
+        let level = 1;
+        let pointsToNextLevel = 10;
+        let timer;
+
+        function startGame() {
+            timer = setInterval(countdown, 1000);
+            moveBlondieRandomly();
+        }
+
         function scorePoint() {
             score++;
-            document.getElementById('score').innerText = 'Score: ' + score;
+            document.getElementById('score').innerText = 'Pisteet: ' + score;
+            checkLevelUp();
+            moveBlondieRandomly();
         }
+
+        function checkLevelUp() {
+            if (score >= pointsToNextLevel * level) {
+                level++;
+                document.getElementById('level').innerText = 'Taso: ' + level;
+                increaseDifficulty();
+            }
+        }
+
+        function increaseDifficulty() {
+            // Voit lisätä pelin vaikeustasoa esimerkiksi nopeuttamalla aikaa
+            if (time > 5) {
+                time -= 5;
+                document.getElementById('time').innerText = 'Aika: ' + time;
+            }
+
+            // Voit myös pienentää Blondie-kuvan kokoa
+            let blondie = document.getElementById('blondie');
+            let newSize = Math.max(50, blondie.width - 10);
+            blondie.width = newSize;
+            blondie.height = newSize;
+        }
+
+        function moveBlondieRandomly() {
+            let blondie = document.getElementById('blondie');
+            let maxWidth = window.innerWidth - blondie.width;
+            let maxHeight = window.innerHeight - blondie.height;
+
+            let randomX = Math.floor(Math.random() * maxWidth);
+            let randomY = Math.floor(Math.random() * maxHeight);
+
+            blondie.style.position = 'absolute';
+            blondie.style.left = randomX + 'px';
+            blondie.style.top = randomY + 'px';
+        }
+
+        function countdown() {
+            time--;
+            document.getElementById('time').innerText = 'Aika: ' + time;
+            if (time <= 0) {
+                clearInterval(timer);
+                alert('Aika loppui! Lopullinen pistemääräsi on ' + score + '. Saavutit tason ' + level + '!');
+                resetGame();
+            }
+        }
+
+        function resetGame() {
+            score = 0;
+            time = 30;
+            level = 1;
+            document.getElementById('score').innerText = 'Pisteet: ' + score;
+            document.getElementById('time').innerText = 'Aika: ' + time;
+            document.getElementById('level').innerText = 'Taso: ' + level;
+            let blondie = document.getElementById('blondie');
+            blondie.width = 100;
+            blondie.height = 100;
+            startGame();
+        }
+
+        window.onload = startGame;
     </script>
 </body>
 </html>
