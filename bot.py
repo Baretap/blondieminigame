@@ -1,10 +1,11 @@
 from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
+from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import Application, CommandHandler, ContextTypes
 import logging
 import asyncio
 
 # Enable logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levellevelname)s - %(message)s', level=logging.INFO)
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levellevelvelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Define the command handler
