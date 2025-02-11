@@ -4,19 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blondie Mini Game</title>
-    <style>
-        body { text-align: center; }
-        img { cursor: pointer; }
-        #blondie {
-            position: relative;
-            transition: all 0.3s ease;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1>Blondie Mini Game</h1>
     <p id="level">Taso: 1</p>
-    <img src="blondie.png" alt="Blondie" id="blondie" onclick="scorePoint()" />
+    <div id="game-area">
+        <img src="blondie.png" alt="Blondie" id="blondie" onclick="scorePoint()" />
+    </div>
     <p id="score">Pisteet: 0</p>
     <p id="time">Aika: 30</p>
 
@@ -48,13 +43,11 @@
         }
 
         function increaseDifficulty() {
-            // Voit lisätä pelin vaikeustasoa esimerkiksi nopeuttamalla aikaa
             if (time > 5) {
                 time -= 5;
                 document.getElementById('time').innerText = 'Aika: ' + time;
             }
 
-            // Voit myös pienentää Blondie-kuvan kokoa
             let blondie = document.getElementById('blondie');
             let newSize = Math.max(50, blondie.width - 10);
             blondie.width = newSize;
@@ -62,9 +55,10 @@
         }
 
         function moveBlondieRandomly() {
+            let gameArea = document.getElementById('game-area');
             let blondie = document.getElementById('blondie');
-            let maxWidth = window.innerWidth - blondie.width;
-            let maxHeight = window.innerHeight - blondie.height;
+            let maxWidth = gameArea.clientWidth - blondie.width;
+            let maxHeight = gameArea.clientHeight - blondie.height;
 
             let randomX = Math.floor(Math.random() * maxWidth);
             let randomY = Math.floor(Math.random() * maxHeight);
