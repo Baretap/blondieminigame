@@ -8,17 +8,16 @@
 </head>
 <body>
     <h1>Blondie Mini Game</h1>
-    <button id="game-button" onclick="openGame()">Game</button>
-    <div id="game-area" class="blurred" style="display: none;">
+    <div id="game-area" class="blurred">
         <div id="info-bar">
             <p id="level">Taso: 1</p>
             <p id="score">Pisteet: 0</p>
             <p id="time">Aika: 30</p>
         </div>
         <img src="blondie.png" alt="Blondie" id="blondie" onclick="scorePoint()" class="unclickable"/>
-    </div>
-    <div id="start-button-container" class="overlay">
-        <button id="start-button" onclick="startGame()">Start</button>
+        <div id="start-button-container" class="overlay">
+            <button id="start-button" onclick="startGame()">Start</button>
+        </div>
     </div>
     <div id="control-panel">
         <button onclick="showWallet()">Wallet</button>
@@ -31,12 +30,6 @@
         let level = 1;
         let pointsToNextLevel = 10;
         let timer;
-
-        function openGame() {
-            document.getElementById('game-button').style.display = 'none';
-            document.getElementById('game-area').style.display = 'block';
-            document.getElementById('start-button-container').style.display = 'block';
-        }
 
         function startGame() {
             document.getElementById('start-button-container').style.display = 'none';
@@ -125,8 +118,6 @@
             blondie.classList.add('unclickable');
             document.getElementById('start-button-container').style.display = 'block';
             document.getElementById('game-area').classList.add('blurred');
-            document.getElementById('game-area').style.display = 'none';
-            document.getElementById('game-button').style.display = 'block';
         }
 
         function showWallet() {
