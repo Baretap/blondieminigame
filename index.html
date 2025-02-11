@@ -9,13 +9,13 @@
 <body>
     <h1>Blondie Mini Game</h1>
     <button id="game-button" onclick="openGame()">Game</button>
-    <div id="game-area" style="display: none;">
+    <div id="game-area" class="blurred" style="display: none;">
         <div id="info-bar">
             <p id="level">Taso: 1</p>
             <p id="score">Pisteet: 0</p>
             <p id="time">Aika: 30</p>
         </div>
-        <img src="blondie.png" alt="Blondie" id="blondie" onclick="scorePoint()" />
+        <img src="blondie.png" alt="Blondie" id="blondie" onclick="scorePoint()" class="unclickable"/>
         <button id="start-button" onclick="startGame()">Start</button>
     </div>
     <div id="control-panel">
@@ -37,15 +37,20 @@
 
         function startGame() {
             document.getElementById('start-button').style.display = 'none';
+            document.getElementById('game-area').classList.remove('blurred');
+            let blondie = document.getElementById('blondie');
+            blondie.classList.remove('unclickable');
             timer = setInterval(countdown, 1000);
             moveBlondieRandomly();
         }
 
         function scorePoint() {
-            score++;
-            document.getElementById('score').innerText = 'Pisteet: ' + score;
-            checkLevelUp();
-            moveBlondieRandomly();
+            if (!document.getElementById('blondie').classList.contains('unclickable')) {
+                score++;
+                document.getElementById('score').innerText = 'Pisteet: ' + score;
+                checkLevelUp();
+                moveBlondieRandomly();
+            }
         }
 
         function checkLevelUp() {
@@ -114,7 +119,9 @@
             let blondie = document.getElementById('blondie');
             blondie.width = 100;
             blondie.height = 100;
+            blondie.classList.add('unclickable');
             document.getElementById('start-button').style.display = 'block';
+            document.getElementById('game-area').classList.add('blurred');
             document.getElementById('game-area').style.display = 'none';
             document.getElementById('game-button').style.display = 'block';
         }
