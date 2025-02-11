@@ -41,6 +41,11 @@
             if (score >= pointsToNextLevel * level) {
                 level++;
                 document.getElementById('level').innerText = 'Taso: ' + level;
+                if (level === 5) {
+                    score += 100;
+                    document.getElementById('score').innerText = 'Pisteet: ' + score;
+                    alert('Onneksi olkoon! Saavutettuasi tason 5, sait 100 pistettä ekstraa!');
+                }
                 increaseDifficulty();
             }
         }
