@@ -1,0 +1,74 @@
+body {
+    background-color: #f0f8ff;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: #ff1493;
+    margin-top: 20px;
+}
+
+#level, #score, #time {
+    font-size: 1.5em;
+    margin: 10px;
+    color: #333;
+}
+
+#blondie {
+    cursor: pointer;
+    border: 3px solid #ff69b4;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    transition: transform 0.1s;
+}
+
+#blondie:active {
+    transform: scale(0.9);
+}
+
+#game-over {
+    font-size: 2em;
+    color: #ff4500;
+    margin-top: 20px;
+}
+
+button {
+    background-color: #ff1493;
+    color: #fff;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #ff69b4;
+}
+
+/* Animaatio */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+#blondie {
+    animation: pulse 2s infinite;
+}
+
+/* Gradient-tausta */
+body {
+    background: linear-gradient(to bottom, #f0f8ff, #ffe4e1);
+}
