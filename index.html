@@ -8,12 +8,13 @@
 </head>
 <body>
     <h1>Blondie Mini Game</h1>
-    <p id="level">Taso: 1</p>
-    <div id="game-area">
+    <button id="start-button" onclick="startGame()">Start</button>
+    <div id="game-area" style="display: none;">
+        <p id="level">Taso: 1</p>
         <img src="blondie.png" alt="Blondie" id="blondie" onclick="scorePoint()" />
+        <p id="score">Pisteet: 0</p>
+        <p id="time">Aika: 30</p>
     </div>
-    <p id="score">Pisteet: 0</p>
-    <p id="time">Aika: 30</p>
 
     <script>
         let score = 0;
@@ -23,6 +24,8 @@
         let timer;
 
         function startGame() {
+            document.getElementById('start-button').style.display = 'none';
+            document.getElementById('game-area').style.display = 'block';
             timer = setInterval(countdown, 1000);
             moveBlondieRandomly();
         }
@@ -63,7 +66,6 @@
             let randomX = Math.floor(Math.random() * maxWidth);
             let randomY = Math.floor(Math.random() * maxHeight);
 
-            blondie.style.position = 'absolute';
             blondie.style.left = randomX + 'px';
             blondie.style.top = randomY + 'px';
         }
@@ -88,10 +90,9 @@
             let blondie = document.getElementById('blondie');
             blondie.width = 100;
             blondie.height = 100;
-            startGame();
+            document.getElementById('start-button').style.display = 'block';
+            document.getElementById('game-area').style.display = 'none';
         }
-
-        window.onload = startGame;
     </script>
 </body>
 </html>
