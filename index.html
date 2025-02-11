@@ -14,6 +14,7 @@
         <img src="blondie.png" alt="Blondie" id="blondie" onclick="scorePoint()" />
         <p id="score">Pisteet: 0</p>
         <p id="time">Aika: 30</p>
+        <button onclick="showWallet()">Wallet</button>
     </div>
 
     <script>
@@ -81,8 +82,15 @@
             if (time <= 0) {
                 clearInterval(timer);
                 alert('Aika loppui! Lopullinen pistemääräsi on ' + score + '. Saavutit tason ' + level + '!');
+                updateTotalScore();
                 resetGame();
             }
+        }
+
+        function updateTotalScore() {
+            let totalScore = localStorage.getItem('totalScore') || 0;
+            totalScore = parseInt(totalScore) + score;
+            localStorage.setItem('totalScore', totalScore);
         }
 
         function resetGame() {
@@ -97,6 +105,10 @@
             blondie.height = 100;
             document.getElementById('start-button').style.display = 'block';
             document.getElementById('game-area').style.display = 'none';
+        }
+
+        function showWallet() {
+            window.location.href = 'wallet.html';
         }
     </script>
 </body>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blondie Mini Game - Wallet</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Blondie Mini Game - Wallet</h1>
+    <p id="total-score">Kokonaispisteet: 0</p>
+    <button onclick="backToGame()">Takaisin peliin</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const totalScore = localStorage.getItem('totalScore') || 0;
+            document.getElementById('total-score').innerText = `Kokonaispisteet: ${totalScore}`;
+        });
+
+        function backToGame() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
