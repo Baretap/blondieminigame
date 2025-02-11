@@ -10,11 +10,16 @@
     <h1>Blondie Mini Game</h1>
     <button id="start-button" onclick="startGame()">Start</button>
     <div id="game-area" style="display: none;">
-        <p id="level">Taso: 1</p>
+        <div id="info-bar">
+            <p id="level">Taso: 1</p>
+            <p id="score">Pisteet: 0</p>
+            <p id="time">Aika: 30</p>
+        </div>
         <img src="blondie.png" alt="Blondie" id="blondie" onclick="scorePoint()" />
-        <p id="score">Pisteet: 0</p>
-        <p id="time">Aika: 30</p>
+    </div>
+    <div id="control-panel">
         <button onclick="showWallet()">Wallet</button>
+        <!-- Voit lisätä tähän muita navigointinappeja -->
     </div>
 
     <script>
@@ -65,12 +70,13 @@
 
         function moveBlondieRandomly() {
             let gameArea = document.getElementById('game-area');
+            let infoBar = document.getElementById('info-bar');
             let blondie = document.getElementById('blondie');
             let maxWidth = gameArea.clientWidth - blondie.width;
-            let maxHeight = gameArea.clientHeight - blondie.height;
+            let maxHeight = gameArea.clientHeight - blondie.height - infoBar.clientHeight;
 
             let randomX = Math.floor(Math.random() * maxWidth);
-            let randomY = Math.floor(Math.random() * maxHeight);
+            let randomY = Math.floor(Math.random() * maxHeight) + infoBar.clientHeight;
 
             blondie.style.left = randomX + 'px';
             blondie.style.top = randomY + 'px';
