@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 # Define the command handler
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     keyboard = [
-        [InlineKeyboardButton("Play", url="https://baretap.github.io/BlondieClicker/")]
+        [InlineKeyboardButton("Play", url="https://baretap.github.io/blondieminigame/")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
