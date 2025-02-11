@@ -59,6 +59,14 @@ h1 {
     transform: scale(0.9);
 }
 
+#start-button-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1; /* Näkyy kirkkaana sumean pelialueen päällä */
+}
+
 #game-button, #start-button {
     background-color: #ff1493;
     color: #fff;

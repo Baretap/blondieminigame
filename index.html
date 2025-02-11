@@ -16,6 +16,8 @@
             <p id="time">Aika: 30</p>
         </div>
         <img src="blondie.png" alt="Blondie" id="blondie" onclick="scorePoint()" class="unclickable"/>
+    </div>
+    <div id="start-button-container" class="overlay">
         <button id="start-button" onclick="startGame()">Start</button>
     </div>
     <div id="control-panel">
@@ -33,10 +35,11 @@
         function openGame() {
             document.getElementById('game-button').style.display = 'none';
             document.getElementById('game-area').style.display = 'block';
+            document.getElementById('start-button-container').style.display = 'block';
         }
 
         function startGame() {
-            document.getElementById('start-button').style.display = 'none';
+            document.getElementById('start-button-container').style.display = 'none';
             document.getElementById('game-area').classList.remove('blurred');
             let blondie = document.getElementById('blondie');
             blondie.classList.remove('unclickable');
@@ -120,7 +123,7 @@
             blondie.width = 100;
             blondie.height = 100;
             blondie.classList.add('unclickable');
-            document.getElementById('start-button').style.display = 'block';
+            document.getElementById('start-button-container').style.display = 'block';
             document.getElementById('game-area').classList.add('blurred');
             document.getElementById('game-area').style.display = 'none';
             document.getElementById('game-button').style.display = 'block';
