@@ -21,7 +21,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await asyncio.sleep(1)
 
 def main():
-    application = Application.builder().token("YOUR_TELEGRAM_BOT_TOKEN").build()
+    application = Application.builder().token("7348594119:AAFkfxTpTbby1BP7GEUvuXgt5Ss9roKyeJk").build()
 
     application.add_handler(CommandHandler("start", start))
 
