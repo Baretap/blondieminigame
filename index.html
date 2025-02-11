@@ -1,27 +1,28 @@
 <!DOCTYPE html>
-<html lang="fi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blondie Mini Game</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1>Blondie Mini Game</h1>
-    <div id="game-area" class="blurred">
-        <div id="info-bar">
-            <p id="level">Level: 1</p>
-            <p id="score">Score: 0</p>
-            <p id="time">Time: 30</p>
+    <div id="game-container">
+        <div id="game-area">
+            <div id="info-bar">
+                <p id="level">Level: 1</p>
+                <p id="score">Score: 0</p>
+                <p id="time">Time: 30</p>
+            </div>
+            <img src="blondie.png" alt="Blondie" id="blondie" class="unclickable" />
         </div>
-        <img src="blondie.png" alt="Blondie" id="blondie" class="unclickable" />
         <div id="start-button-container">
             <button id="start-button" onclick="startGame()">Start</button>
         </div>
     </div>
     <div id="control-panel">
         <button onclick="showWallet()">Wallet</button>
-        <!-- Voit lisätä tähän muita navigointinappeja -->
+        <!-- Add other navigation buttons here -->
     </div>
 
     <script>
@@ -69,7 +70,7 @@
             }
 
             let blondie = document.getElementById('blondie');
-            let newSize = Math.max(50, blondie.width - 10);
+            let newSize = Math.max(50, blondie.clientWidth - 10);
             blondie.style.width = newSize + 'px';
             blondie.style.height = newSize + 'px';
         }
@@ -116,7 +117,7 @@
             blondie.style.width = '100px';
             blondie.style.height = '100px';
             blondie.classList.add('unclickable');
-            document.getElementById('start-button-container').style.display = 'block';
+            document.getElementById('start-button-container').style.display = 'flex';
             document.getElementById('game-area').classList.add('blurred');
         }
 
