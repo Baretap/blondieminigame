@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blondie Mini Game - Play</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Blondie Mini Game</h1>
+    <div id="game-container">
+        <div id="game-area">
+            <div id="info-bar">
+                <p id="level">Level: 1</p>
+                <p id="score">Score: 0</p>
+                <p id="time">Time: 30</p>
+            </div>
+            <img src="blondie.png" alt="Blondie" id="blondie" class="unclickable"/>
+        </div>
+        <div id="start-button-container">
+            <button id="start-button" onclick="startGame()">Start</button>
+        </div>
+    </div>
+    <div id="control-panel">
+        <button onclick="window.location.href='wallet.html'">Wallet</button>
+        <button onclick="window.location.href='tasks.html'">Tasks</button>
+        <button onclick="window.location.href='index.html'">Home</button>
+    </div>
+
+    <script>
+        let score = 0;
+        let time = 30;
+        let level = 1;
+        let pointsToNextLevel = 10;
+        let timer;
+
+        function startGame() {
+            document.getElementById('start-button-container').style.display = 'none';
+            document.getElementById('game-area').classList.remove('blurred');
+            const blondie = document.getElementById('blondie');
+            blondie.classList.remove('unclickable');
+            timer = setInterval(countdown, 1000);
+            moveBlondieRandomly();
+        }
+
+        function scorePoint() {
+            if (!document.getElementById('blondie').classList.contains('unclickable')) {
+                score++;
+                document.getElementById('score').innerText = 'Score: ' + score;
+                checkLevelUp();
+                moveBlondieRandomly();
+            }
+        }
+
+        function checkLevelUp() {
+            if (score >= pointsToNextLevel * level) {
+                level++;
+                document.getElementById('level').innerText = 'Level: ' + level;
+                if (level === 5) {
+                    score += 100;
+                    document.getElementById('score').innerText = 'Score: ' + score;
+                    alert('Congratulations! You reached level 5 and earned 100 bonus points!');
+                }
+                increaseDifficulty();
+            }
+        }
+
+        function increaseDifficulty() {
+            if (time > 5) {
+                time -= 5;
+                document.getElementById('time').innerText = 'Time: ' + time;
+            }
+
+            const blondie = document.getElementById('blondie');
+            const newSize = Math.max(50, blondie.clientWidth - 10);
+            blondie.style.width = newSize + 'px';
+            blondie.style.height = newSize + 'px';
+        }
+
+        function moveBlondieRandomly() {
+            const gameArea = document.getElementById('game-area');
+            const infoBar = document.getElementById('info-bar');
+            const blondie = document.getElementById('blondie');
+            const maxWidth = gameArea.clientWidth - blondie.clientWidth;
+            const maxHeight = gameArea.clientHeight - blondie.clientHeight - infoBar.clientHeight;
+
+            const randomX = Math.floor(Math.random() * maxWidth);
+            const randomY = Math.floor(Math.random() * maxHeight) + infoBar.clientHeight;
+
+            blondie.style.left = randomX + 'px';
+            blondie.style.top = randomY + 'px';
+        }
+
+        function countdown() {
+            time--;
+            document.getElementById('time').innerText = 'Time: ' + time;
+            if (time <= 0) {
+                clearInterval(timer);
+                alert('Time is up! Your final score is ' + score + '. You reached level ' + level + '!');
+                updateTotalScore();
+                resetGame();
+            }
+        }
+
+        function updateTotalScore() {
+            let totalScore = localStorage.getItem('totalScore') || 0;
+            totalScore = parseInt(totalScore) + score;
+            localStorage.setItem('totalScore', totalScore);
+        }
+
+        function resetGame() {
+            score = 0;
+            time = 30;
+            level = 1;
+            document.getElementById('score').innerText = 'Score: ' + score;
+            document.getElementById('time').innerText = 'Time: ' + time;
+            document.getElementById('level').innerText = 'Level: ' + level;
+            const blondie = document.getElementById('blondie');
+            blondie.style.width = '100px';
+            blondie.style.height = '100px';
+            blondie.classList.add('unclickable');
+            document.getElementById('start-button-container').style.display = 'flex';
+            document.getElementById('game-area').classList.add('blurred');
+        }
+
+        document.getElementById('blondie').addEventListener('click', scorePoint);
+    </script>
+</body>
+</html>
