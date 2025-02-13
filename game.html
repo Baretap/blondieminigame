@@ -15,7 +15,6 @@
                 <p id="time">Time: 30</p>
             </div>
             <img src="blondie.png" alt="Blondie" id="blondie" class="unclickable" />
-            <img src="powerup.png" alt="Power-Up" id="powerup" class="hidden" />
         </div>
         <div id="start-button-container">
             <button id="start-button" onclick="promptPlayerName()">Start</button>
@@ -53,9 +52,6 @@
         let time = 30;
         let level = 1;
         let pointsToNextLevel = 10;
-        let isDoublePoints = false;
-        let spawnPowerUpTimeout;
-        let powerUpTimer;
 
         function promptPlayerName() {
             playerName = prompt("Enter your name:");
@@ -68,17 +64,14 @@
         function startGame() {
             document.getElementById('start-button-container').style.display = 'none';
             document.getElementById('game-area').classList.remove('blurred');
-            const blondie = document.getElementById('blondie');
-            blondie.classList.remove('unclickable');
+            document.getElementById('blondie').classList.remove('unclickable');
             timer = setInterval(countdown, 1000);
             moveBlondieRandomly();
-            spawnPowerUp();
         }
 
         function scorePoint() {
             if (!document.getElementById('blondie').classList.contains('unclickable')) {
-                const pointsEarned = isDoublePoints ? 2 : 1;
-                score += pointsEarned;
+                score++;
                 document.getElementById('score').innerText = 'Score: ' + score;
                 checkLevelUp();
                 moveBlondieRandomly();
@@ -94,20 +87,7 @@
                     document.getElementById('score').innerText = 'Score: ' + score;
                     alert('Congratulations! You reached level 5 and earned 100 bonus points!');
                 }
-                increaseDifficulty();
             }
-        }
-
-        function increaseDifficulty() {
-            if (time > 5) {
-                time -= 5;
-                document.getElementById('time').innerText = 'Time: ' + time;
-            }
-
-            const blondie = document.getElementById('blondie');
-            const newSize = Math.max(50, blondie.clientWidth - 10);
-            blondie.style.width = newSize + 'px';
-            blondie.style.height = newSize + 'px';
         }
 
         function moveBlondieRandomly() {
@@ -129,9 +109,6 @@
             document.getElementById('time').innerText = 'Time: ' + time;
             if (time <= 0) {
                 clearInterval(timer);
-                clearTimeout(spawnPowerUpTimeout);
-                clearTimeout(powerUpTimer);
-                document.getElementById('powerup').classList.add('hidden');
                 alert('Time is up! Your final score is ' + score + '. You reached level ' + level + '!');
                 updateTotalScore();
                 submitScore();
@@ -149,54 +126,12 @@
             score = 0;
             time = 30;
             level = 1;
-            isDoublePoints = false;
             document.getElementById('score').innerText = 'Score: ' + score;
             document.getElementById('time').innerText = 'Time: ' + time;
             document.getElementById('level').innerText = 'Level: ' + level;
-            const blondie = document.getElementById('blondie');
-            blondie.style.width = '100px';
-            blondie.style.height = '100px';
-            blondie.classList.add('unclickable');
+            document.getElementById('blondie').classList.add('unclickable');
             document.getElementById('start-button-container').style.display = 'flex';
             document.getElementById('game-area').classList.add('blurred');
-        }
-
-        // Power-Up Functions
-        function spawnPowerUp() {
-            const powerUp = document.getElementById('powerup');
-            const timeToPowerUp = Math.floor(Math.random() * 10000) + 5000;
-
-            spawnPowerUpTimeout = setTimeout(() => {
-                const gameArea = document.getElementById('game-area');
-                const infoBar = document.getElementById('info-bar');
-                const maxWidth = gameArea.clientWidth - powerUp.clientWidth;
-                const maxHeight = gameArea.clientHeight - powerUp.clientHeight - infoBar.clientHeight;
-
-                const randomX = Math.floor(Math.random() * maxWidth);
-                const randomY = Math.floor(Math.random() * maxHeight) + infoBar.clientHeight;
-
-                powerUp.style.left = randomX + 'px';
-                powerUp.style.top = randomY + 'px';
-                powerUp.classList.remove('hidden');
-
-                powerUp.onclick = activateDoublePoints;
-            }, timeToPowerUp);
-        }
-
-        function activateDoublePoints() {
-            const powerUp = document.getElementById('powerup');
-            powerUp.classList.add('hidden');
-            isDoublePoints = true;
-            clearTimeout(powerUpTimer);
-
-            const doublePointsDuration = 10000;
-            alert('Double Points Activated!');
-
-            powerUpTimer = setTimeout(() => {
-                isDoublePoints = false;
-                alert('Double Points Deactivated.');
-                spawnPowerUp();
-            }, doublePointsDuration);
         }
 
         function submitScore() {
