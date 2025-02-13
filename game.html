@@ -18,7 +18,7 @@
             <img src="powerup.png" alt="Power-Up" id="powerup" class="hidden" />
         </div>
         <div id="start-button-container">
-            <button id="start-button" onclick="promptPlayerName()">Start</button>
+            <button id="start-button" onclick="startGame()">Start</button>
         </div>
     </div>
     <div id="control-panel">
@@ -47,7 +47,7 @@
         const app = firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        let playerName = '';
+        let playerName = localStorage.getItem('playerName') || 'Anonymous';
         let timer;
         let score = 0;
         let time = 30;
@@ -56,14 +56,6 @@
         let isDoublePoints = false;
         let spawnPowerUpTimeout;
         let powerUpTimer;
-
-        function promptPlayerName() {
-            playerName = prompt("Enter your name:");
-            if (!playerName) {
-                playerName = 'Anonymous';
-            }
-            startGame();
-        }
 
         function startGame() {
             document.getElementById('start-button-container').style.display = 'none';

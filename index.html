@@ -7,12 +7,25 @@
 </head>
 <body>
     <h1>Welcome to Blondie Mini Game</h1>
-    <p>Click on Blondie to earn points! Compete, complete tasks, and rise to the top of the leaderboard! All players contribute to enriching Blondie.</p>
+    <p>Enter your player name to get started:</p>
+    <input type="text" id="player-name" placeholder="Enter your name" />
+    <button onclick="savePlayerName()">Submit</button>
     <nav>
         <button onclick="window.location.href='game.html'">Play Game</button>
         <button onclick="window.location.href='wallet.html'">Wallet</button>
         <button onclick="window.location.href='tasks.html'">Tasks</button>
         <button onclick="window.location.href='leaderboard.html'">Leaderboard</button>
     </nav>
+    <script>
+        function savePlayerName() {
+            const playerName = document.getElementById('player-name').value;
+            if (playerName) {
+                localStorage.setItem('playerName', playerName);
+                alert('Player name saved!');
+            } else {
+                alert('Please enter a player name.');
+            }
+        }
+    </script>
 </body>
 </html>
