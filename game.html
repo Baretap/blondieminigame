@@ -48,6 +48,14 @@
         const database = firebase.database();
 
         let playerName = '';
+        let timer;
+        let score = 0;
+        let time = 30;
+        let level = 1;
+        let pointsToNextLevel = 10;
+        let isDoublePoints = false;
+        let spawnPowerUpTimeout;
+        let powerUpTimer;
 
         function promptPlayerName() {
             playerName = prompt("Enter your name:");
@@ -156,11 +164,9 @@
         // Power-Up Functions
         function spawnPowerUp() {
             const powerUp = document.getElementById('powerup');
-            // Random time between 5 and 15 seconds
             const timeToPowerUp = Math.floor(Math.random() * 10000) + 5000;
 
             spawnPowerUpTimeout = setTimeout(() => {
-                // Position the power-up randomly
                 const gameArea = document.getElementById('game-area');
                 const infoBar = document.getElementById('info-bar');
                 const maxWidth = gameArea.clientWidth - powerUp.clientWidth;
@@ -173,7 +179,6 @@
                 powerUp.style.top = randomY + 'px';
                 powerUp.classList.remove('hidden');
 
-                // Set event listener
                 powerUp.onclick = activateDoublePoints;
             }, timeToPowerUp);
         }
@@ -184,17 +189,12 @@
             isDoublePoints = true;
             clearTimeout(powerUpTimer);
 
-            // Duration of double points (10 seconds)
             const doublePointsDuration = 10000;
-
-            // Notify the player
             alert('Double Points Activated!');
 
-            // Set a timer to deactivate double points
             powerUpTimer = setTimeout(() => {
                 isDoublePoints = false;
                 alert('Double Points Deactivated.');
-                // Spawn the next power-up
                 spawnPowerUp();
             }, doublePointsDuration);
         }

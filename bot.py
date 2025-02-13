@@ -13,10 +13,10 @@ logger = logging.getLogger(__name__)
 # Define the command handler
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     keyboard = [
-        [InlineKeyboardButton("Play Game", url="https://baretap.github.io/BlondieMiniGame/game.html")],
-        [InlineKeyboardButton("View Wallet", url="https://baretap.github.io/BlondieMiniGame/wallet.html")],
-        [InlineKeyboardButton("View Tasks", url="https://baretap.github.io/BlondieMiniGame/tasks.html")],
-        [InlineKeyboardButton("Leaderboard", url="https://baretap.github.io/BlondieMiniGame/leaderboard.html")]
+        [InlineKeyboardButton("Play Game", url="https://baretap.github.io/blondieminigame/game.html")],
+        [InlineKeyboardButton("View Wallet", url="https://baretap.github.io/blondieminigame/wallet.html")],
+        [InlineKeyboardButton("View Tasks", url="https://baretap.github.io/blondieminigame/tasks.html")],
+        [InlineKeyboardButton("Leaderboard", url="https://baretap.github.io/blondieminigame/leaderboard.html")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
