@@ -18,7 +18,7 @@
             <img src="powerup.png" alt="Power-Up" id="powerup" class="hidden" />
         </div>
         <div id="start-button-container">
-            <button id="start-button" onclick="startGame()">Start</button>
+            <button id="start-button" onclick="promptPlayerName()">Start</button>
         </div>
     </div>
     <div id="control-panel">
@@ -49,11 +49,15 @@
 
         let playerName = '';
 
-        function startGame() {
+        function promptPlayerName() {
             playerName = prompt("Enter your name:");
             if (!playerName) {
                 playerName = 'Anonymous';
             }
+            startGame();
+        }
+
+        function startGame() {
             document.getElementById('start-button-container').style.display = 'none';
             document.getElementById('game-area').classList.remove('blurred');
             const blondie = document.getElementById('blondie');
@@ -196,10 +200,10 @@
         }
 
         function submitScore() {
-            var scoresRef = firebase.database().ref('scores');
-            var sharedWealthRef = firebase.database().ref('sharedWealth');
+            const scoresRef = database.ref('scores');
+            const sharedWealthRef = database.ref('sharedWealth');
 
-            var newScoreRef = scoresRef.push();
+            const newScoreRef = scoresRef.push();
             newScoreRef.set({
                 name: playerName,
                 score: score,
