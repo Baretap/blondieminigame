@@ -5,7 +5,7 @@ import asyncio
 
 # Enable logging
 logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    format='%(asctime)s - %(name)s - %(levellevelvelname)s - %(message)s',
     level=logging.INFO
 )
 logger = logging.getLogger(__name__)
@@ -13,12 +13,15 @@ logger = logging.getLogger(__name__)
 # Define the command handler
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     keyboard = [
-        [InlineKeyboardButton("Play", url="https://baretap.github.io/BlondieMiniGame/")]
+        [InlineKeyboardButton("Play Game", url="https://baretap.github.io/BlondieMiniGame/game.html")],
+        [InlineKeyboardButton("View Wallet", url="https://baretap.github.io/BlondieMiniGame/wallet.html")],
+        [InlineKeyboardButton("View Tasks", url="https://baretap.github.io/BlondieMiniGame/tasks.html")],
+        [InlineKeyboardButton("Leaderboard", url="https://baretap.github.io/BlondieMiniGame/leaderboard.html")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     await update.message.reply_text(
-        'Welcome to the Blondie Mini Game! Click the button below to visit the game:',
+        'Welcome to the Blondie Mini Game! Click the buttons below to navigate:',
         reply_markup=reply_markup
     )
     await asyncio.sleep(1)

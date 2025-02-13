@@ -8,13 +8,14 @@
 <body>
     <h1>Blondie Mini Game</h1>
     <div id="game-container">
-        <div id="game-area">
+        <div id="game-area" class="blurred">
             <div id="info-bar">
                 <p id="level">Level: 1</p>
                 <p id="score">Score: 0</p>
                 <p id="time">Time: 30</p>
             </div>
-            <img src="blondie.png" alt="Blondie" id="blondie" class="unclickable"/>
+            <img src="blondie.png" alt="Blondie" id="blondie" class="unclickable" />
+            <img src="powerup.png" alt="Power-Up" id="powerup" class="hidden" />
         </div>
         <div id="start-button-container">
             <button id="start-button" onclick="startGame()">Start</button>
@@ -23,28 +24,49 @@
     <div id="control-panel">
         <button onclick="window.location.href='wallet.html'">Wallet</button>
         <button onclick="window.location.href='tasks.html'">Tasks</button>
+        <button onclick="window.location.href='leaderboard.html'">Leaderboard</button>
         <button onclick="window.location.href='index.html'">Home</button>
     </div>
 
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js"></script>
     <script>
-        let score = 0;
-        let time = 30;
-        let level = 1;
-        let pointsToNextLevel = 10;
-        let timer;
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyA41LovJoSleYbR1i9mhokwxMDlE0QL4Eg",
+            authDomain: "blondieminigame.firebaseapp.com",
+            projectId: "blondieminigame",
+            storageBucket: "blondieminigame.firebasestorage.app",
+            messagingSenderId: "790420999786",
+            appId: "1:790420999786:web:40832a2f9368353efbc413",
+            measurementId: "G-9DRTPS592J"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        let playerName = '';
 
         function startGame() {
+            playerName = prompt("Enter your name:");
+            if (!playerName) {
+                playerName = 'Anonymous';
+            }
             document.getElementById('start-button-container').style.display = 'none';
             document.getElementById('game-area').classList.remove('blurred');
             const blondie = document.getElementById('blondie');
             blondie.classList.remove('unclickable');
             timer = setInterval(countdown, 1000);
             moveBlondieRandomly();
+            spawnPowerUp();
         }
 
         function scorePoint() {
             if (!document.getElementById('blondie').classList.contains('unclickable')) {
-                score++;
+                const pointsEarned = isDoublePoints ? 2 : 1;
+                score += pointsEarned;
                 document.getElementById('score').innerText = 'Score: ' + score;
                 checkLevelUp();
                 moveBlondieRandomly();
@@ -95,8 +117,12 @@
             document.getElementById('time').innerText = 'Time: ' + time;
             if (time <= 0) {
                 clearInterval(timer);
+                clearTimeout(spawnPowerUpTimeout);
+                clearTimeout(powerUpTimer);
+                document.getElementById('powerup').classList.add('hidden');
                 alert('Time is up! Your final score is ' + score + '. You reached level ' + level + '!');
                 updateTotalScore();
+                submitScore();
                 resetGame();
             }
         }
@@ -111,6 +137,7 @@
             score = 0;
             time = 30;
             level = 1;
+            isDoublePoints = false;
             document.getElementById('score').innerText = 'Score: ' + score;
             document.getElementById('time').innerText = 'Time: ' + time;
             document.getElementById('level').innerText = 'Level: ' + level;
@@ -120,6 +147,70 @@
             blondie.classList.add('unclickable');
             document.getElementById('start-button-container').style.display = 'flex';
             document.getElementById('game-area').classList.add('blurred');
+        }
+
+        // Power-Up Functions
+        function spawnPowerUp() {
+            const powerUp = document.getElementById('powerup');
+            // Random time between 5 and 15 seconds
+            const timeToPowerUp = Math.floor(Math.random() * 10000) + 5000;
+
+            spawnPowerUpTimeout = setTimeout(() => {
+                // Position the power-up randomly
+                const gameArea = document.getElementById('game-area');
+                const infoBar = document.getElementById('info-bar');
+                const maxWidth = gameArea.clientWidth - powerUp.clientWidth;
+                const maxHeight = gameArea.clientHeight - powerUp.clientHeight - infoBar.clientHeight;
+
+                const randomX = Math.floor(Math.random() * maxWidth);
+                const randomY = Math.floor(Math.random() * maxHeight) + infoBar.clientHeight;
+
+                powerUp.style.left = randomX + 'px';
+                powerUp.style.top = randomY + 'px';
+                powerUp.classList.remove('hidden');
+
+                // Set event listener
+                powerUp.onclick = activateDoublePoints;
+            }, timeToPowerUp);
+        }
+
+        function activateDoublePoints() {
+            const powerUp = document.getElementById('powerup');
+            powerUp.classList.add('hidden');
+            isDoublePoints = true;
+            clearTimeout(powerUpTimer);
+
+            // Duration of double points (10 seconds)
+            const doublePointsDuration = 10000;
+
+            // Notify the player
+            alert('Double Points Activated!');
+
+            // Set a timer to deactivate double points
+            powerUpTimer = setTimeout(() => {
+                isDoublePoints = false;
+                alert('Double Points Deactivated.');
+                // Spawn the next power-up
+                spawnPowerUp();
+            }, doublePointsDuration);
+        }
+
+        function submitScore() {
+            var scoresRef = firebase.database().ref('scores');
+            var sharedWealthRef = firebase.database().ref('sharedWealth');
+
+            var newScoreRef = scoresRef.push();
+            newScoreRef.set({
+                name: playerName,
+                score: score,
+                timestamp: Date.now()
+            });
+
+            sharedWealthRef.once('value', function(snapshot) {
+                let sharedWealth = snapshot.val() || 0;
+                sharedWealth += score;
+                sharedWealthRef.set(sharedWealth);
+            });
         }
 
         document.getElementById('blondie').addEventListener('click', scorePoint);

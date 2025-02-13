@@ -8,16 +8,43 @@
 <body>
     <h1>Your Wallet</h1>
     <p id="total-score">Total Score: 0</p>
+    <p id="shared-wealth">Shared Wealth: 0</p>
     <nav>
         <button onclick="window.location.href='game.html'">Play Game</button>
         <button onclick="window.location.href='tasks.html'">Tasks</button>
+        <button onclick="window.location.href='leaderboard.html'">Leaderboard</button>
         <button onclick="window.location.href='index.html'">Home</button>
     </nav>
 
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js"></script>
     <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyA41LovJoSleYbR1i9mhokwxMDlE0QL4Eg",
+            authDomain: "blondieminigame.firebaseapp.com",
+            projectId: "blondieminigame",
+            storageBucket: "blondieminigame.firebasestorage.app",
+            messagingSenderId: "790420999786",
+            appId: "1:790420999786:web:40832a2f9368353efbc413",
+            measurementId: "G-9DRTPS592J"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
         document.addEventListener('DOMContentLoaded', () => {
             const totalScore = localStorage.getItem('totalScore') || 0;
             document.getElementById('total-score').innerText = 'Total Score: ' + totalScore;
+
+            // Fetch and display shared wealth
+            const sharedWealthRef = database.ref('sharedWealth');
+            sharedWealthRef.on('value', function(snapshot) {
+                const sharedWealth = snapshot.val() || 0;
+                document.getElementById('shared-wealth').innerText = 'Shared Wealth: ' + sharedWealth;
+            });
         });
     </script>
 </body>

@@ -1,4 +1,4 @@
-/* General Styles */
+ /* General Styles */
 body {
     background-color: #f0f8ff;
     font-family: 'Arial', sans-serif;
@@ -31,6 +31,7 @@ nav button:hover {
     background-color: #ff69b4;
 }
 
+/* Game Page Styles */
 #game-container {
     position: relative;
     width: 80%;
@@ -114,10 +115,49 @@ nav button:hover {
     background-color: #ff69b4;
 }
 
-body {
-    background: linear-gradient(to bottom, #f0f8ff, #ffe4e1);
+/* Power-Up Styles */
+#powerup {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
 }
 
+.hidden {
+    display: none;
+}
+
+/* Leaderboard Styles */
+#leaderboard-container {
+    margin: 20px auto;
+    width: 80%;
+    max-width: 600px;
+}
+
+#leaderboard {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#leaderboard th, #leaderboard td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#leaderboard th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+#leaderboard tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#leaderboard tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Task Styles */
 .task {
     border: 1px solid #ccc;
     padding: 15px;
@@ -138,4 +178,8 @@ body {
 
 .task button:disabled {
     background-color: #6c757d;
+}
+
+body {
+    background: linear-gradient(to bottom, #f0f8ff, #ffe4e1);
 }
